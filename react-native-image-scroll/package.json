@@ -1,0 +1,15 @@
+{
+  "name": "react-native-image-scroll",
+  "version": "1.0.0",
+  "description": "Picture carousel component",
+  "main": "react-native-image-scroll.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Picture",
+    "carousel",
+  ],
+  "author": "lyw",
+  "license": "ISC"
+}
