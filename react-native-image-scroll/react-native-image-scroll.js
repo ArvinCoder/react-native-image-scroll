@@ -1,6 +1,5 @@
 'use strict'
 import React,{Component,PropTypes} from 'react';
-import Dimensions from 'Dimensions';
 import ReactNative,{
   View,
   StyleSheet,
@@ -8,6 +7,7 @@ import ReactNative,{
   Image,
   Text,
   Animated,
+  Dimensions
 } from 'react-native';
 
 let currentPageIndex = 0;
