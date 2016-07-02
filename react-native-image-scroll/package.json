@@ -1,15 +1,77 @@
 {
-  "name": "react-native-image-scroll",
-  "version": "1.0.0",
+  "_args": [
+    [
+      "react-native-image-scroll",
+      "/Users/lyw/Desktop/XingHuoManager"
+    ]
+  ],
+  "_from": "react-native-image-scroll@latest",
+  "_id": "react-native-image-scroll@1.0.3",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/react-native-image-scroll",
+  "_nodeVersion": "5.8.0",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/react-native-image-scroll-1.0.0.tgz_1466067553811_0.7321247970685363"
+  },
+  "_npmUser": {
+    "email": "Arvin20160606@Gmail.com",
+    "name": "arvin_coder"
+  },
+  "_npmVersion": "3.7.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "react-native-image-scroll",
+    "raw": "react-native-image-scroll",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_shasum": "176f0e073d9261cbe10d35ebcf6512bbdb4a2bb8",
+  "_shrinkwrap": null,
+  "_spec": "react-native-image-scroll",
+  "_where": "/Users/lyw/Desktop/XingHuoManager",
+  "author": {
+    "name": "lyw"
+  },
+  "bugs": {
+    "url": "https://github.com/ArvinCoder/react-native-image-scroll/issues"
+  },
+  "dependencies": {},
   "description": "Picture carousel component",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "176f0e073d9261cbe10d35ebcf6512bbdb4a2bb8",
+    "tarball": "https://registry.npmjs.org/react-native-image-scroll/-/react-native-image-scroll-1.0.0.tgz"
+  },
+  "homepage": "https://github.com/ArvinCoder/react-native-image-scroll#readme",
+  "keywords": [
+    "Picture",
+    "carousel"
+  ],
+  "license": "ISC",
   "main": "react-native-image-scroll.js",
+  "maintainers": [
+    {
+      "email": "Arvin20160606@Gmail.com",
+      "name": "arvin_coder"
+    }
+  ],
+  "name": "react-native-image-scroll",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArvinCoder/react-native-image-scroll.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "Picture",
-    "carousel",
-  ],
-  "author": "lyw",
-  "license": "ISC"
+  "version": "1.0.4"
 }

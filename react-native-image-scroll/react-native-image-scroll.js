@@ -7,7 +7,8 @@ import ReactNative,{
   Image,
   Text,
   Animated,
-  Dimensions
+  Dimensions,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 let currentPageIndex = 0;
@@ -26,28 +27,23 @@ export default class ImageScrollComponent extends Component {
   }
 
   componentWillUnmount(){
-    if(timer != -1) clearInterval(timer);
-    timer = -1;
+    this.endTimer();
   }
 
   beginTimer(){
     if (!this.props.images.length)return;
-    if(timer != -1) {
-      clearInterval(timer);
-      timer = -1;
-    }
+    this.endTimer();
     timer = setInterval(() =>{
       let width = this.props.itemWidth;
-      // if((currentPageIndex + 1)  >= this.props.images.length){
-      //   currentPageIndex = 0;
-      // }else {
-      //   currentPageIndex++;
-      // }
       currentPageIndex = (currentPageIndex + 1)  >= this.props.images.length ? 0 : currentPageIndex + 1;
-      // ((currentPageIndex + 1)  >= this.props.images.length) ?  (currentPageIndex = 0) : (currentPageIndex++);
       this.refs.scrollView.scrollResponderScrollTo({x:currentPageIndex * width,y:0,animated:true});
       this.animatePageIndicator();
     },5000);
+  }
+
+  endTimer(){
+    if (timer != -1) clearInterval(timer);
+    timer = -1;
   }
 
   animatePageIndicator(){
@@ -74,9 +70,16 @@ export default class ImageScrollComponent extends Component {
     }
   }
 
+  _imageOnPress(index){
+    if (!!this.props.imageOnPresss) {
+      this.props.imageOnPresss(index);
+    }
+  }
+
   renderImagesWithData(data:[]){
     if(!data)return;
     if(timer == -1) this.beginTimer();
+    var weakself = this;
     return data.map((item,index) => {
         let imageSource = null;
         if (this.props.isUrl) {
@@ -84,12 +87,15 @@ export default class ImageScrollComponent extends Component {
         }else {
           imageSource = item;
         }
-        return (<Image key = {index}
-          source = {imageSource}
-          resizeMode = 'stretch'
-          style={{width:this.props.itemWidth,height:this.props.itemHeight}}>
-          {this.renderTitleViewWithIndex(index)}
-        </Image>
+        return (
+          <TouchableWithoutFeedback onPress={()=> weakself._imageOnPress(index)} key = {index}>
+            <Image
+            source = {imageSource}
+            resizeMode = 'stretch'
+            style={{width:this.props.itemWidth,height:this.props.itemHeight}}>
+            {this.renderTitleViewWithIndex(index)}
+          </Image>
+        </TouchableWithoutFeedback>
       );
     });
   }
@@ -118,7 +124,7 @@ export default class ImageScrollComponent extends Component {
           showsVerticalScrollIndicator = {false}
           pagingEnabled = {true}
           contentContainerStyle={styles.container}
-          scrollEventThrottle = {100}
+          scrollEventThrottle = {50}
           onScroll = {this.onScroll.bind(this)}
           onScrollBeginDrag = {this.onScrollBeginDrag.bind(this)}
           onScrollEndDrag = {this.onScrollEndDrag.bind(this)}
@@ -137,15 +143,19 @@ export default class ImageScrollComponent extends Component {
   }
 
   onScrollBeginDrag(){
-    if (timer != -1) clearInterval(timer);
-    timer = -1;
+    this.endTimer();
   }
 
   onScrollEndDrag(){
-    this.beginTimer();
+    //延时执行的作用是，防止在用户刚放手的时候，还没停止滚动 就开始新的定时，造成计算index错误
+    this.endTimer();
+    setTimeout(()=>{
+      this.beginTimer();
+    },2000);
   }
 
   onScroll(event){
+    // console.log('onScroll');
     if (timer != -1) return;
     //为了兼容iOS和安卓不使用onScrollAnimationEnd
     let contentOffsetX = event.nativeEvent.contentOffset.x;
@@ -156,7 +166,7 @@ export default class ImageScrollComponent extends Component {
     if (Math.abs(interval) > this.props.itemWidth * 0.5) {
       interval < 0 ? pageIndex++ : pageIndex--;
     }
-    console.log(pageIndex);
+    // console.log(pageIndex);
     if (pageIndex != currentPageIndex) {
       currentPageIndex = pageIndex;
       this.animatePageIndicator();
@@ -171,6 +181,7 @@ export default class ImageScrollComponent extends Component {
     isUrl:true,
     pageIndicatorTintColor:'#8B60AFFF',
     pageIndicatorBackgrounpColor:'white',
+    imageOnPresss:null,
   };
 
   static propTypes = {
@@ -178,6 +189,7 @@ export default class ImageScrollComponent extends Component {
     titles:PropTypes.array,
     //default is true ,images must return [require(...)..] if false
     isUrl:PropTypes.bool,
+    imageOnPresss:PropTypes.func,
     itemWidth:PropTypes.number.isRequired,
     itemHeight:PropTypes.number.isRequired,
     pageIndicatorTintColor:PropTypes.string,
